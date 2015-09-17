@@ -63,7 +63,6 @@ router.post('/query', function(req, jiraResponse, next) {
             if(json.issues[0] == undefined){
                 console.log('There is no jira tickets found.');
                 jiraList = (null, null);
-
             }
             else {
                 console.log(json);
@@ -87,18 +86,25 @@ router.post('/query', function(req, jiraResponse, next) {
 // jiraResults is json object for search date set
 function matchSearch (jiraResults,keyWordsList){
 
+    var inSummaryWeight = 80;
+    var inDescriptionWeight = 20;
+
     var jiraItemList = jiraResults.issues;
     var matchRateList = [];
 
     jiraItemList.forEach(function(jiraTicket, jiraTicketIndex){
 
         var matchRate = 0;
+        var inSummary = 0;
+        var inDescription = 0;
 
         keyWordsList.forEach(function(keyword,keyWordIndex){
 
             // Search key words in summary and description
-            var inSummary = jiraTicket.fields.summary.split(keyword).length == 1 ? 0 : 1;
-            var inDescription = jiraTicket.fields.description.split(keyword).length == 1 ? 0 : 1;
+            if(jiraTicket.fields.summary != null)
+            inSummary = jiraTicket.fields.summary.split(keyword).length == 1 ? 0 : 1;
+            if(jiraTicket.fields.description != null)
+            inDescription = jiraTicket.fields.description.split(keyword).length == 1 ? 0 : 1;
 
             matchRate = matchRate + inSummary * 80 + inDescription * 20;
 

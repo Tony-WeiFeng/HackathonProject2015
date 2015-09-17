@@ -1,29 +1,35 @@
 extends layout
-
 block content
-	h1 Tickets Search in Jira
-
-	form#searchKeyWords(name="search",method="post",action="/query")
-		p Select Project:
-		select#jiraProjectSelector(name="project")
-			option(value='LRN') Learn
-			option(value='ULTRA') Ultra
-		p Input Key Words for Search
-		input#inputKeyWords(type="text", placeholder="key words", style="height:20px;width:400px;margin-right:30px", name="keywords")
-		button#btnSearch(type="submit") Search
-
-	h2 Search Result list     
-	table(border="1" class='table table-striped')
-		tr
-			th ID
-			th Summary
-			th Status
-			th Order
-
-		each jiraTicket, i in jiraList
-			tr
-				td(align="left")
-					a(href="https://jira.bbpd.io:8443/browse/" + jiraTicket.key)= jiraTicket.key
-				td(align="left")= jiraTicket.fields.summary
-				td= jiraTicket.fields.status.name
-				td=i+1
+	body.container
+		img#logo(src='/images/logo.jpg')
+		h2.page-header Tickets Search in Jira
+		.panel.panel-default
+			.panel-heading
+				form#searchKeyWords.form-inline(name='search', method='post', action='/query')
+					.form-group
+						label.search-label Select Project:
+						select.form-control(name='project')
+							option(value='LRN') Learn
+							option(value='ULTRA') Ultra
+					.form-group
+						label.search-label Input key words for Search:
+						input#inputKeyWords.form-control(name='keywords', type='text', placeholder='key words')
+					button.btn.btn-default(type='submit') Search
+					a.btn.btn-default.create(href='https://jira.bbpd.io:8443/secure/CreateIssue!default.jspa' target='_blank') Create issue
+		.panel.panel-default
+			.panel-heading Search Result list
+			.panel-body
+				table.table.table-bordered.table-striped(border='1')
+					tr
+						th ID
+						th Summary
+						th Status
+						th Order
+					each jiraTicket, i in jiraList
+						tr
+							td(align="left")
+								a(href="https://jira.bbpd.io:8443/browse/" + jiraTicket.key)= jiraTicket.key
+							td(align="left")= jiraTicket.fields.summary
+							td= jiraTicket.fields.status.name
+							td=i + 1
+				p#result There is no jira tickets found.

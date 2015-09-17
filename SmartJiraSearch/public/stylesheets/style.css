@@ -1,8 +1,37 @@
 body {
-  padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+    background-color: black;
+    background-image: url('/images/black.jpg');
+}
+h2 {
+    color: White;
+}
+a {
+/*color: #00B7FF;*/
+}
+.btn{
+    margin-right: 20px;
+}
+.create{
+    background-color: #454545;
+    color: #ffffff
+}
+#logo {
+    width: 3%;
+    height: 3%;
+    float: left;
+    padding-top: 30px;
+    margin-right: 30px;
 }
 
-a {
-  color: #00B7FF;
+.form-group,
+.search-label {
+  margin-right: 20px;
+}
+
+#inputKeyWords {
+    width: 300px;
+}
+
+#result {
+    visibility: hidden;
 }

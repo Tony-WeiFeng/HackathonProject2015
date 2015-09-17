@@ -59,18 +59,17 @@ router.post('/query', function(req, jiraResponse, next) {
 
             var json = JSON.parse(body);
             // No tickets are found.
-            console.log('****' + json.issues[0])
             if(json.issues[0] == undefined){
                 console.log('There is no jira tickets found.');
-                jiraList = (null, null);
-
+                //jiraList = (null, null);
+                jiraResponse.render('search', {title: 'Jira Search', jiraList: [], empty: 'There is no jira tickets found.'});
             }
             else {
                 console.log(json);
                 console.log(json.issues[0].fields.status.name);
 
                 var jiraList = matchSearch(json, keywordsList);
-                jiraResponse.render('search', {title: 'Jira Search', jiraList: jiraList});
+                jiraResponse.render('search', {title: 'Jira Search', jiraList: jiraList, empty: 'There is no jira tickets found.'});
             }
         });
     });

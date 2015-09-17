@@ -15,9 +15,10 @@ block content
 						label.search-label Input key words for Search:
 						input#inputKeyWords.form-control(name='keywords', type='text', placeholder='key words')
 					button.btn.btn-default(type='submit') Search
-					a.btn.btn-default.create(href='https://jira.bbpd.io:8443/secure/CreateIssue!default.jspa' target='_blank') Create issue
+
 		.panel.panel-default
 			.panel-heading Search Result list
+				a.btn.btn-default.create(href='https://jira.bbpd.io:8443/secure/CreateIssue!default.jspa' target='_blank') Create issue
 			.panel-body
 				table.table.table-bordered.table-striped(border='1')
 					tr
@@ -32,4 +33,4 @@ block content
 							td(align="left")= jiraTicket.fields.summary
 							td= jiraTicket.fields.status.name
 							td=i + 1
-				p#result There is no jira tickets found.
+				p(name='empty')=empty

@@ -22,14 +22,14 @@ block content
 			.panel-body
 				table.table.table-bordered.table-striped(border='1')
 					tr
-						th ID
+						th(width="150px") ID
 						th Summary
 						th Status
 						th Order
 					each jiraTicket, i in jiraList
 						tr
 							td(align="left")
-								a(href="https://jira.bbpd.io:8443/browse/" + jiraTicket.key)= jiraTicket.key
+								a(href="https://jira.bbpd.io:8443/browse/" + jiraTicket.key target='_blank')= jiraTicket.key
 							td(align="left")= jiraTicket.fields.summary
 							td= jiraTicket.fields.status.name
 							td=i + 1

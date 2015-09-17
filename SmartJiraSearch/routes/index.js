@@ -26,7 +26,7 @@ router.post('/query', function(req, jiraResponse, next) {
     var postData = {
         jql: jqlStr,
         startAt: 0,
-        // no limition for the query results count
+        // no limitation for the query results count
         //maxResults: 100,
         validateQuery: true,
         fields: ['key','summary','description','status']
@@ -53,31 +53,31 @@ router.post('/query', function(req, jiraResponse, next) {
         //console.log("body: ", res);
         res.on('data', function(chunk) {
             body += chunk;
-            //process.stdout.write(JSON.parse(chunk));
-            //process.stdout.write(chunk);
-
         });
 
         res.on('end',function(){
-            var json = JSON.parse(body);
-            //process.stdout.write(JSON.parse(body));
-            //process.stdout.write(json);
-            //console.log('============cut line=========');
-            //console.log(json);
-            console.log(json.issues[0].fields.status.name);
-            //console.log(json.issues[0].fields.summary);
 
-            var jiraList = matchSearch(json,keywordsList);
-            jiraResponse.render('search', { title: 'Jira Search', jiraList: jiraList });
+            var json = JSON.parse(body);
+            // No tickets are found.
+            console.log('****' + json.issues[0])
+            if(json.issues[0] == undefined){
+                console.log('There is no jira tickets found.');
+                jiraList = (null, null);
+
+            }
+            else {
+                console.log(json);
+                console.log(json.issues[0].fields.status.name);
+
+                var jiraList = matchSearch(json, keywordsList);
+                jiraResponse.render('search', {title: 'Jira Search', jiraList: jiraList});
+            }
         });
     });
 
     req.write(JSON.stringify(postData));
-    //console.log("result: ", str);
 
     req.end();
-
-
 
     req.on('error', function(e){
         console.error('ERROR: ' + e.message);
@@ -96,7 +96,7 @@ function matchSearch (jiraResults,keyWordsList){
 
         keyWordsList.forEach(function(keyword,keyWordIndex){
 
-            // Search key words in su
+            // Search key words in summary and description
             var inSummary = jiraTicket.fields.summary.split(keyword).length == 1 ? 0 : 1;
             var inDescription = jiraTicket.fields.description.split(keyword).length == 1 ? 0 : 1;
 
@@ -120,7 +120,6 @@ function matchSearch (jiraResults,keyWordsList){
         // Get jira iteam list indexes for top 10 match rate
         var jiraIteamListIndex = matchRateList[i][0];
         sortedJiraItemList[i] = jiraItemList[jiraIteamListIndex];
-        //console.log(matchRateList[i][1]);
     }
 
     return sortedJiraItemList;

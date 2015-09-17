@@ -8,12 +8,11 @@ h2 {
 a {
 /*color: #00B7FF;*/
 }
-.btn{
-    margin-right: 20px;
-}
 .create{
     background-color: #454545;
-    color: #ffffff
+    color: #ffffff;
+    float: right;
+    margin-top: -8px;
 }
 #logo {
     width: 3%;
@@ -33,5 +32,5 @@ a {
 }
 
 #result {
-    visibility: hidden;
+    /*visibility: hidden;*/
 }

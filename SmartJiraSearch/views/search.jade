@@ -1,0 +1,29 @@
+extends layout
+
+block content
+	h1 Tickets Search in Jira
+
+	form#searchKeyWords(name="search",method="post",action="/query")
+		p Select Project:
+		select#jiraProjectSelector(name="project")
+			option(value='LRN') Learn
+			option(value='ULTRA') Ultra
+		p Input Key Words for Search
+		input#inputKeyWords(type="text", placeholder="key words", style="height:20px;width:400px;margin-right:30px", name="keywords")
+		button#btnSearch(type="submit") Search
+
+	h2 Search Result list     
+	table(border="1" class='table table-striped')
+		tr
+			th ID
+			th Summary
+			th Status
+			th Order
+
+		each jiraTicket, i in jiraList
+			tr
+				td(align="left")
+					a(href="https://jira.bbpd.io:8443/browse/" + jiraTicket.key)= jiraTicket.key
+				td(align="left")= jiraTicket.fields.summary
+				td= jiraTicket.fields.status.name
+				td=i+1
